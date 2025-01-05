@@ -1,5 +1,5 @@
 from data import BaseDados
-from algoritmos.bublesort import BubbleSort
+from algoritmos.bubblesort import BubbleSort
 from algoritmos.insertionsort import InsertionSort
 from algoritmos.mergesort import MergeSort
 from algoritmos.quicksort import QuickSort
