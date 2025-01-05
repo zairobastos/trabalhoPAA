@@ -4,36 +4,31 @@ import sys
 
 
 class QuickSort():
-    def __init__(self, array: list[int]) -> None:
-        self.array = array
+    def __init__(self, vetor: list[int]) -> None:
+        self.vetor = vetor
 
     def quick_sort(self) -> list[int]:
-        """Ordena uma lista de inteiros utilizando o algoritmo Quick Sort
+        vetor = self.vetor
+        tempoinicial = time.time()
+        self.quick_sort_recursivo(vetor, 0, len(vetor) - 1)
+        return vetor, time.time() - tempoinicial
 
-        Returns:
-            list[int]: Lista de inteiros ordenada
-        """
-        arr = self.array
-        start = time.time()
-        self.quick_sort_recursive(arr, 0, len(arr) - 1)
-        return arr, time.time() - start
-
-    def quick_sort_recursive(self, arr: list[int], low: int, high: int) -> None:
+    def quick_sort_recursivo(self, vetor: list[int], piso: int, teto: int) -> None:
         sys.setrecursionlimit(10**9)
-        if low < high:
-            pi = self.partition(arr, low, high)
+        if piso < teto:
+            pi = self.particionar(vetor, piso, teto)
 
-            self.quick_sort_recursive(arr, low, pi - 1)
-            self.quick_sort_recursive(arr, pi + 1, high)
+            self.quick_sort_recursivo(vetor, piso, pi - 1)
+            self.quick_sort_recursivo(vetor, pi + 1, teto)
 
-    def partition(self, arr: list[int], low: int, high: int) -> int:
-        i = low - 1
-        pivot = arr[high]
+    def particionar(self, vetor: list[int], piso: int, teto: int) -> int:
+        i = piso - 1
+        pivot = vetor[teto]
 
-        for j in range(low, high):
-            if arr[j] < pivot:
+        for j in range(piso, teto):
+            if vetor[j] < pivot:
                 i += 1
-                arr[i], arr[j] = arr[j], arr[i]
+                vetor[i], vetor[j] = vetor[j], vetor[i]
 
-        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        vetor[i + 1], vetor[teto] = vetor[teto], vetor[i + 1]
         return i + 1

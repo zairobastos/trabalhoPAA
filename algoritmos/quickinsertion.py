@@ -2,42 +2,40 @@ import time
 
 
 class QuickInsertion:
-    def __init__(self, array: list[int]) -> None:
-        self.array = array
+    def __init__(self, vetor: list[int]) -> None:
+        self.vetor = vetor
 
-    def insertion_sort(self, arr, left, right):
-        for i in range(left + 1, right + 1):
-            key = arr[i]
+    def insertion_sort(self, vetor, esq, dir):
+        for i in range(esq + 1, dir + 1):
+            chave = vetor[i]
             j = i - 1
-            while j >= left and arr[j] > key:
-                arr[j + 1] = arr[j]
+            while j >= esq and vetor[j] > chave:
+                vetor[j + 1] = vetor[j]
                 j -= 1
-            arr[j + 1] = key
+            vetor[j + 1] = chave
 
-    def hybrid_quick_sort(self, arr, left, right, threshold):
-        if left < right:
-            # Use Quick Sort for larger partitions
-            if (right - left + 1) > threshold:
-                pivot_index = self.partition(arr, left, right)
-                self.hybrid_quick_sort(arr, left, pivot_index - 1, threshold)
-                self.hybrid_quick_sort(arr, pivot_index + 1, right, threshold)
+    def quickinsertion_sort(self, vetor, esq, dir, limite):
+        if esq < dir:
+            if (dir - esq + 1) > limite:
+                pivo = self.particionar(vetor, esq, dir)
+                self.quickinsertion_sort(vetor, esq, pivo - 1, limite)
+                self.quickinsertion_sort(vetor, pivo + 1, dir, limite)
             else:
-                # Use Insertion Sort for smaller partitions
-                self.insertion_sort(arr, left, right)
+                self.insertion_sort(vetor, esq, dir)
 
-    def partition(self, arr, left, right):
-        pivot = arr[right]
-        i = left - 1
-        for j in range(left, right):
-            if arr[j] <= pivot:
+    def particionar(self, vetor, esq, dir):
+        pivo = vetor[dir]
+        i = esq - 1
+        for j in range(esq, dir):
+            if vetor[j] <= pivo:
                 i += 1
-                arr[i], arr[j] = arr[j], arr[i]
-        arr[i + 1], arr[right] = arr[right], arr[i + 1]
+                vetor[i], vetor[j] = vetor[j], vetor[i]
+        vetor[i + 1], vetor[dir] = vetor[dir], vetor[i + 1]
         return i + 1
 
     # Função principal para ordenar o array
-    def hybrid_sort(self, threshold=10):
-        arr = self.array
-        inicio = time.time()
-        self.hybrid_quick_sort(arr, 0, len(arr) - 1, threshold)
-        return arr, time.time() - inicio
+    def algoritmo_sort(self, limite=10):
+        vetor = self.vetor
+        tempoinicial = time.time()
+        self.quickinsertion_sort(vetor, 0, len(vetor) - 1, limite)
+        return vetor, time.time() - tempoinicial

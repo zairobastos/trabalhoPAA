@@ -2,46 +2,41 @@ import os
 import time
 
 class MergeSort():
-    def __init__(self, array: list[int]) -> None:
-        self.array = array
+    def __init__(self, vetor: list[int]) -> None:
+        self.vetor = vetor
 
     def merge_sort(self) -> list[int]:
-        """Ordena uma lista de inteiros utilizando o algoritmo Merge Sort
+        vetor = self.vetor
+        tempoinicial = time.time()
+        self.merge_sort_recursivo(vetor)
+        return vetor, time.time() - tempoinicial
 
-        Returns:
-            list[int]: Lista de inteiros ordenada
-        """
-        arr = self.array
-        start = time.time()
-        self.merge_sort_recursive(arr)
-        return arr, time.time() - start
+    def merge_sort_recursivo(self, vetor: list[int]) -> None:
+        if len(vetor) > 1:
+            meio = len(vetor) // 2
+            esq = vetor[:meio]
+            dir = vetor[meio:]
 
-    def merge_sort_recursive(self, arr: list[int]) -> None:
-        if len(arr) > 1:
-            mid = len(arr) // 2
-            left = arr[:mid]
-            right = arr[mid:]
-
-            self.merge_sort_recursive(left)
-            self.merge_sort_recursive(right)
+            self.merge_sort_recursivo(esq)
+            self.merge_sort_recursivo(dir)
 
             i = j = k = 0
 
-            while i < len(left) and j < len(right):
-                if left[i] < right[j]:
-                    arr[k] = left[i]
+            while i < len(esq) and j < len(dir):
+                if esq[i] < dir[j]:
+                    vetor[k] = esq[i]
                     i += 1
                 else:
-                    arr[k] = right[j]
+                    vetor[k] = dir[j]
                     j += 1
                 k += 1
 
-            while i < len(left):
-                arr[k] = left[i]
+            while i < len(esq):
+                vetor[k] = esq[i]
                 i += 1
                 k += 1
 
-            while j < len(right):
-                arr[k] = right[j]
+            while j < len(dir):
+                vetor[k] = dir[j]
                 j += 1
                 k += 1
